@@ -13,22 +13,26 @@ public class Kata {
 		System.out.println("N is: "+n);
 		int[] num = Arrays.stream(String.valueOf(n).split("")).mapToInt(Integer::parseInt).toArray();
 		long nextBigNum = -1;
-		int temp=0;
-		int j=1;
 		boolean found=false;
-		while(j<=num.length) {
-			for(int i=num.length-1; i>=0; i--) {
+		int[] newNum = new int[num.length];
+		for(int i=num.length-1; i>=0; i--) {
+			int j=1;
+			while(j<num.length) {
 				if(num[i]>num[i-j]) {
-					temp = num[i];
-					num[i] = num[i-j];
-					num[i-j] = temp;
-					nextBigNum = Long.parseLong(Arrays.stream(num).mapToObj(String::valueOf).collect(Collectors.joining()));
+					for(int k=0; k<i-j; k++) {
+						newNum[k] = num[k];
+					}
+					newNum[i-j] = num[i];
+					for(int l=i-j+1; l<num.length; l++) {
+						newNum[l] = num[l-1];
+					}
+					nextBigNum = Long.parseLong(Arrays.stream(newNum).mapToObj(String::valueOf).collect(Collectors.joining()));
 					found = true;
 					break;
 				}
+				j++;
 			}
 			if(found) break;
-			j++;
 		}
 		return nextBigNum;
 	}
