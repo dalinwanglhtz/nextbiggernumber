@@ -1,7 +1,6 @@
 package com.codewardev;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +13,6 @@ public class Kata {
 		System.out.println("N is: "+n);
 		int[] num = Arrays.stream(String.valueOf(n).split("")).mapToInt(Integer::parseInt).toArray();
 
-		int[] newNum = new int[num.length];
 		boolean found = false;
 		int digit4Insert = -1;
 		int index4Insert = -1;
@@ -23,12 +21,9 @@ public class Kata {
 		for(int i=num.length-1; i>=0; i--) {
 		// Find number at index x that's smaller than number at x-1;
 			if(i-1 >= 0 && num[i]>num[i-1]) {
-				System.out.println("Found num[i] ="+num[i]+" greater than num[i-1] ="+num[i-1]);
-				
-				// Find the number at index greater than x+1 that immediately bigger than number at index x, called y
+				// Find the number at index greater than x-1 that immediately bigger than number at index x
 				for(int j=num.length-1; j>=i; j--) {
 					if(num[j]>num[i-1]) {
-						System.out.println("Found num[j] ="+num[j]+" greater than num[i-1] ="+num[i-1]);
 						found = true;
 						digit4Insert = num[j];
 						origIndex = j;
@@ -41,13 +36,7 @@ public class Kata {
 		}
 		// Insert the y at index x
 		if(digit4Insert != -1) {
-			System.out.println("Digit4insert: "+digit4Insert+" at index: "+index4Insert);
-			newNum = insertElemToArray(num, digit4Insert, index4Insert, origIndex);
-			System.out.println("New Array: ");
-			for(int x: newNum) {
-				System.out.print(x);
-			}
-			System.out.println();
+			int[] newNum = insertElemToArray(num, digit4Insert, index4Insert, origIndex);
 			
 			// Get final result from array
 			return Long.parseLong(Arrays.stream(newNum).mapToObj(String::valueOf).collect(Collectors.joining()));
@@ -71,15 +60,6 @@ public class Kata {
 		
 		// Merge the new integer array
 		return newArray.stream().mapToInt(Integer::intValue).toArray();
-	}
-
-	private static long getHighest(long n) {
-		return Long.parseLong(Arrays.stream(String.valueOf(n).split(""))
-				.mapToInt(Integer::parseInt)
-				.boxed()
-				.sorted(Collections.reverseOrder())
-				.map(String::valueOf)
-				.collect(Collectors.joining()));
 	}
 
 }
