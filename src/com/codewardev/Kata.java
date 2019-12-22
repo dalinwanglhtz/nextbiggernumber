@@ -32,17 +32,14 @@ public class Kata {
 					}
 				}
 			}
-			if(found) break;
+			if(found) {
+				// Insert the y at index x
+				int[] newNum = insertElemToArray(num, digit4Insert, index4Insert, origIndex);
+				return Long.parseLong(Arrays.stream(newNum).mapToObj(String::valueOf).collect(Collectors.joining()));
+			}
 		}
-		// Insert the y at index x
-		if(digit4Insert != -1) {
-			int[] newNum = insertElemToArray(num, digit4Insert, index4Insert, origIndex);
-			
-			// Get final result from array
-			return Long.parseLong(Arrays.stream(newNum).mapToObj(String::valueOf).collect(Collectors.joining()));
-		} else {
-			return -1;
-		}
+
+		return -1;
 	}
 
 	private static int[] insertElemToArray(int[] num, int digit4Insert, int j, int orig) {
