@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 public class Kata {
 
 	public static long nextBiggerNumber(long n) {
-		//long highest = getHighest(n);
-		System.out.println("N is: "+n);
 		int[] num = Arrays.stream(String.valueOf(n).split("")).mapToInt(Integer::parseInt).toArray();
 
 		boolean found = false;
@@ -21,7 +19,7 @@ public class Kata {
 		for(int i=num.length-1; i>=0; i--) {
 		// Find number at index x that's smaller than number at x-1;
 			if(i-1 >= 0 && num[i]>num[i-1]) {
-				// Find the number at index greater than x-1 that immediately bigger than number at index x
+				// Find the number at index greater than x-1 that is immediately bigger than number at index x
 				for(int j=num.length-1; j>=i; j--) {
 					if(num[j]>num[i-1]) {
 						found = true;
@@ -34,7 +32,7 @@ public class Kata {
 			}
 			if(found) {
 				// Insert the y at index x
-				int[] newNum = insertElemToArray(num, digit4Insert, index4Insert, origIndex);
+				int[] newNum = insertElemToNewArray(num, digit4Insert, index4Insert, origIndex);
 				return Long.parseLong(Arrays.stream(newNum).mapToObj(String::valueOf).collect(Collectors.joining()));
 			}
 		}
@@ -42,7 +40,7 @@ public class Kata {
 		return -1;
 	}
 
-	private static int[] insertElemToArray(int[] num, int digit4Insert, int j, int orig) {
+	private static int[] insertElemToNewArray(int[] num, int digit4Insert, int j, int orig) {
 		int[] newNum = Arrays.copyOf(num, num.length);
 		
 		newNum[orig] = newNum[j];
